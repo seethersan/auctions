@@ -3,7 +3,7 @@ version: '3.7'
 services:
   web:
     build: ./auction
-    command: sleep infinity #python manage.py runserver 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./auction/:/usr/src/auction/
     ports:
