@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  web:
+    build: ./auction
+    command: sleep infinity #python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./auction/:/usr/src/auction/
+    ports:
+      - 8000:8000
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+
+  db:
+    image: postgres:12.0-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=seether
+      - POSTGRES_PASSWORD=auction
+      - POSTGRES_DB=auction
+  
+volumes:
+  postgres_data: 
