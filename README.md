@@ -2,6 +2,8 @@
 
 ## Install
 ```
+git clone https://github.com/seethersan/auctions.git
+cd auctions
 make build
 make up
 make init
