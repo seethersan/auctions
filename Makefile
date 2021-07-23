@@ -1,4 +1,4 @@
-CONTAINER_NAME = app
+CONTAINER_NAME = auctions
 
 status: ## Show containers status, use me with: make status target=api
 	docker-compose ps ${target}
