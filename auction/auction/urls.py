@@ -17,16 +17,25 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from django.conf.urls import url
 
+from rest_framework import permissions
+from rest_framework.schemas import get_schema_view
+from rest_framework_swagger.renderers import SwaggerUIRenderer, OpenAPIRenderer
+
 from rest_framework_jwt.views import obtain_jwt_token
 from rest_framework_jwt.views import refresh_jwt_token
 from rest_framework_jwt.views import verify_jwt_token
 
+schema_view = get_schema_view(title='Bids API', renderer_classes=[OpenAPIRenderer, SwaggerUIRenderer],
+   public=True,
+   permission_classes=(permissions.AllowAny,))
+
 urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('api-auth/', include('rest_framework.urls')),
+    url(r'^api/docs/', schema_view, name="docs"),
     url(r'^auth-jwt/', obtain_jwt_token, name='jwt-auth'),
     url(r'^auth-jwt-refresh/', refresh_jwt_token),
     url(r'^auth-jwt-verify/', verify_jwt_token),
-    path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),
     re_path(r'api/(?P<version>[v1|v2]+)/bid/', include('bids.urls')),
     re_path(r'api/(?P<version>[v1|v2]+)/user/', include('users.urls')),
 ]
